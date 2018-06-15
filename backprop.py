@@ -84,8 +84,7 @@ class neuron():
 			self.pattern = []
 		
 
-	# Computes the error for backprop
-	# Calculates 
+	# Computes the error for backprop 
 	def error(self,target,inp):
 		if self.output:
 			self.weight_delta = []
@@ -129,25 +128,11 @@ def main():
 	# Hidden Layer really need to add a layer construct!
 	z_1 = neuron(3,activationc,learning_rate,'hidden')
 	z_2 = neuron(3,activationc,learning_rate,'hidden')
-	# z_3 = neuron(3,activationc,learning_rate,'hidden')
-	# z_4 = neuron(3,activationc,learning_rate,'hidden')
-
-	# z_5 = neuron(3,activationc,learning_rate,'hidden')
-	# z_6 = neuron(3,activationc,learning_rate,'hidden')
-	# z_7 = neuron(3,activationc,learning_rate,'hidden')
-	# z_8 = neuron(3,activationc,learning_rate,'hidden')
 
 	# Output layer and connections
-	y_1 = neuron(3,activationc,learning_rate,'output')
+	y_1 = neuron(3,activationo,learning_rate,'output')
 	z_1.connect(y_1)
 	z_2.connect(y_1)
-	# z_3.connect(y_1)
-	# z_4.connect(y_1)
-
-	# z_5.connect(y_1)
-	# z_6.connect(y_1)
-	# z_7.connect(y_1)
-	# z_8.connect(y_1)
 
 	acc = 0
 	total = 0
@@ -157,37 +142,16 @@ def main():
 			z_1.prop(i)
 			z_2.prop(i)
 
-			# z_3.prop(i)
-			# z_4.prop(i)
-			
-			# z_5.prop(i)
-			# z_6.prop(i)
-			# z_7.prop(i)
-			# z_8.prop(i)
 			
 			y_1.prop()
 			y_1.error(target=xordataset[i],inp=i)
 			
 			z_1.error(target=0,inp=i)
 			z_2.error(target=0,inp=i)
-			# z_3.error(i)
-			# z_4.error(i)
-
-			# z_5.error(i)
-			# z_6.error(i)
-			# z_7.error(i)
-			# z_8.error(i)
 			
 			y_1.update()
 			z_1.update()
 			z_2.update()
-			# z_3.update()
-			# z_4.update()
-			# z_5.update()
-			# z_6.update()
-			# z_7.update()
-			# z_8.update()
-			# print(z_1.weights)
 			dev += (xordataset[i]-y_1.y)**2
 			if y_1.y > 0 and xordataset[i] > 0: 
 				acc+=1
