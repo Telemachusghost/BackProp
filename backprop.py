@@ -42,10 +42,7 @@ class neuron():
 		self.alpha = alpha
 		
 
-	# Connects neurons.
-	# This could use some work I ended up incrementing a line variable so that the neurons would keep
-	# Track of which weight to use when updating the error, basically how the neuron is connected to
-	# the next neuron.. Maybe use a linked list
+	# Connects neurons
 	def connect(self,neuron):
 		self.connectionsto.append(neuron)
 		neuron.connectionsfrom.append(self)
@@ -57,7 +54,6 @@ class neuron():
 		delta = 0.01
 		xh = delta+x
 		num = function(xh) - function(x)
-		# print(f"diff at {x}:  {num/delta}")
 		return num/delta
 
 
@@ -80,7 +76,6 @@ class neuron():
 				 self.y_in += self.weights[i]*self.pattern[i]
 			self.y_in += self.weights[-1]
 			self.y = self.activation(self.y_in)
-			#print(self.y)
 			self.pattern = []
 		
 
@@ -92,7 +87,6 @@ class neuron():
 			for i in self.connectionsfrom:
 				self.weight_delta.append(self.err*self.alpha*i.y)
 			self.weight_delta.append(self.err*self.alpha)
-			#print(len(self.connectionsfrom))
 				
 		elif self.hidden:
 			self.weight_delta = []
@@ -101,7 +95,6 @@ class neuron():
 				error_in += i.err*i.weights[i.connectionsfrom.index(self)]
 
 			error = error_in*self.diff(self.activation,self.y_in)
-			# print(error)
 			for i in range(len(inp)):
 				self.weight_delta.append(self.alpha*error*inp[i])
 			self.weight_delta.append(self.alpha*error)
@@ -111,7 +104,6 @@ class neuron():
 	def update(self):
 		for i in range(len(self.weight_delta)):
 			self.weights[i] += self.weight_delta[i]
-		# self.weights[-1] += self.weight_delta[-1]
 	
 
 
@@ -171,7 +163,6 @@ def main():
 		else:
 			dev = 0
 		print(f"MSE:{mse}")
-	#print(f"****Final Weights****\nz1_weights: {z_1.weights} z2_weights {z_2.weights} y1_weights {y_1.weights}")
 	print(f"accuracy: {acc/total}")
 	print(f" {total/4} epochs")
 	print(f"The seperating line for z1: {(-z_1.weights[0])/z_1.weights[1]}x + {-z_1.weights[2]/z_1.weights[1]}")
